@@ -111,6 +111,14 @@ exports.login = async function (req, res) {
 
     const {email, password} = req.body;
 
+    // email 빈칸 체크
+    //if (!email)
+    //    return res.send(response(baseResponse.SIGNUP_EMAIL_EMPTY));
+
+    // 비밀번호 빈칸 체크
+    //if (!password)
+    //    return res.send(response(baseResponse.SIGNUP_PASSWORD_EMPTY));
+
     // TODO: email, password 형식적 Validation
 
     const signInResponse = await userService.postSignIn(email, password);
@@ -130,19 +138,19 @@ exports.patchUsers = async function (req, res) {
 
     // jwt - userId, path variable :userId
 
-    //const userIdFromJWT = req.verifiedToken.userId
+    const userIdFromJWT = req.verifiedToken.userId
 
     const userId = req.params.userId;
     const nickname = req.body.nickname;
 
-    //if (userIdFromJWT != userId) {
-    //    res.send(errResponse(baseResponse.USER_ID_NOT_MATCH));
-    //} else {
+    if (userIdFromJWT != userId) {
+        res.send(errResponse(baseResponse.USER_ID_NOT_MATCH));
+    } else {
         if (!nickname) return res.send(errResponse(baseResponse.USER_NICKNAME_EMPTY));
 
         const editUserInfo = await userService.editUser(userId, nickname)
         return res.send(editUserInfo);
-    //}
+    }
 };
 
 // 회원 정보 삭제 API + JWT + Validation
