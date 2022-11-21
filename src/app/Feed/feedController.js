@@ -24,6 +24,23 @@ exports.postFeed = async function (req, res) {
 
 };
 
+exports.getFeeds = async function (req, res){
+
+    const pageinfo = req.query;
+    const page = parseInt(pageinfo.page);
+    const pageSize = parseInt(pageinfo.pageSize);
+    const userId = pageinfo.userId;
+
+    try {
+        const feedsList = await feedService.cursorFeed(page, pageSize);
+        return res.send(response(baseResponse.SUCCESS, feedsList));
+    } catch (err) {
+        return errResponse(baseResponse.DB_ERROR);
+    }
+
+};
+
+
 exports.patchFeeds = async function (req, res) {
 
 // jwt - userId, path variable :feedId, userId

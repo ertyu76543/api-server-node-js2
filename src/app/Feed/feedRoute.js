@@ -7,6 +7,8 @@ module.exports = function(app){
         feed.postFeed
     );
 
+    app.get('/app/feeds', feed.getFeeds);
+
     // 3. 피드 수정 API
     app.patch('/app/feeds/:feedId/:userId', /*jwtMiddleware,*/ feed.patchFeeds);
 

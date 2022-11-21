@@ -27,6 +27,37 @@ exports.createFeed = async function (content, imageUrl) {
 
 };
 
+exports.cursorFeed = async  function (page, pageSize) {
+    try {
+        let start =0;
+
+        if (page <= 0){
+            page=1;
+        } else {
+            start = (page -1 )* pageSize;
+        }
+
+        const connection = await pool.getConnection(async (conn) => conn);
+        const cnt = await feedDao.Feeds(connection);
+        connection.release();
+
+        if (page > Math.round(cnt[0].total / pageSize)) {
+            return null;
+        }
+
+        const connection1 = await pool.getConnection(async (conn) => conn );
+        const feedsPagingResult = await feedDao.feedPagingInfo(connection1, start, pageSize);
+        connection1.release();
+
+        return response(baseResponse.SUCCESS);
+
+    } catch (err){
+        logger.error(`App - editUser Service error\n: ${err.message}`);
+        return errResponse(baseResponse.DB_ERROR);
+    }
+
+};
+
 exports.editFeed = async function (id, feedId, content) {
     try {
         console.log(id)

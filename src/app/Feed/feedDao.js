@@ -12,6 +12,31 @@ async function insertFeed(connection, insertFeedParams) {
     return insertFeedRow;
 }
 
+async  function Feeds (connection) {
+    const FeedsListQuery = `
+    SELECT *
+    FROM Feed;
+    `;
+    const FeedsListRow = await connection.query(
+        FeedsListQuery
+    );
+    return FeedsListRow[0];
+}
+
+async function feedPagingInfo (connection, start, end) {
+    const feedPagingQuery = `
+    SELECT *
+    FROM Feed
+    LIMIT ${start}, ${end};
+    `;
+    const FeedsPagingRow = await  connection.query(
+        feedPagingQuery
+    );
+    return FeedsPagingRow[0];
+
+
+}
+
 async function updateFeed(connection, id, feedId, content) {
     const updateFeedQuery = `
         UPDATE Feed
@@ -24,6 +49,7 @@ async function updateFeed(connection, id, feedId, content) {
 
 module.exports = {
     insertFeed,
-    updateFeed
-    
+    updateFeed,
+    Feeds,
+    feedPagingInfo
 };

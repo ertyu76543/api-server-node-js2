@@ -74,12 +74,12 @@ exports.postSignIn = async function (email, password) {
             return errResponse(baseResponse.SIGNIN_WITHDRAWAL_ACCOUNT);
         }
 
-        console.log(userInfoRows[0].id) // DB의 userId
+        console.log(userInfoRows[0].userId) // DB의 userId
 
         //토큰 생성 Service
         let token = await jwt.sign(
             {
-                userId: userInfoRows[0].id,
+                userId: userInfoRows[0].userId,
             }, // 토큰의 내용(payload)
             secret_config.jwtsecret, // 비밀키
             {
@@ -88,7 +88,7 @@ exports.postSignIn = async function (email, password) {
             } // 유효 기간 365일
         );
 
-        return response(baseResponse.SUCCESS, {'userId': userInfoRows[0].id, 'jwt': token});
+        return response(baseResponse.SUCCESS, {'userId': userInfoRows[0].userId, 'jwt': token});
 
     } catch (err) {
         logger.error(`App - postSignIn Service error\n: ${err.message} \n${JSON.stringify(err)}`);
