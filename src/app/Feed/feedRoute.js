@@ -7,6 +7,7 @@ module.exports = function(app){
         feed.postFeed
     );
 
+    // 2. 피드 조회 API
     app.get('/app/feeds', feed.getFeeds);
 
     // 3. 피드 수정 API

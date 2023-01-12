@@ -11,8 +11,8 @@ exports.postFeed = async function (req, res) {
 
     const {content, imageUrl} = req.body;
 
-    // 빈 값 체크
     if(!content)
+    // 빈 값 체크
         return res.send(response(baseResponse.FEED_CONTENT_EMPTY));
 
     const createFeed = await feedService.createFeed(

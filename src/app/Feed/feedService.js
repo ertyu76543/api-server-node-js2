@@ -49,7 +49,7 @@ exports.cursorFeed = async  function (page, pageSize) {
         const feedsPagingResult = await feedDao.feedPagingInfo(connection1, start, pageSize);
         connection1.release();
 
-        return response(baseResponse.SUCCESS);
+        return feedsPagingResult;
 
     } catch (err){
         logger.error(`App - editUser Service error\n: ${err.message}`);

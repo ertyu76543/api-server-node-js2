@@ -33,8 +33,6 @@ async function feedPagingInfo (connection, start, end) {
         feedPagingQuery
     );
     return FeedsPagingRow[0];
-
-
 }
 
 async function updateFeed(connection, id, feedId, content) {
